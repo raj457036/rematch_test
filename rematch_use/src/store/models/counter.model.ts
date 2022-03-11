@@ -9,10 +9,21 @@ interface CounterState {
 }
 
 const counterModel = createModel<RootModel>()({
-  name: "counter",
   state: {
     value: 0,
   } as CounterState,
+  selectors: (slice) => ({
+    totalCount() {
+      return slice((counter: CounterState) =>
+        counter.value > 0
+          ? [...Array<number>(counter.value + 1).keys()].reduce(
+              (a, b) => a + b,
+              0
+            )
+          : 0
+      );
+    },
+  }),
   reducers: {
     INCREMENT(state: CounterState) {
       return {

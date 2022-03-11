@@ -8,7 +8,8 @@ import {
 } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Dispatch, RootState, Store } from "src/store";
+import { createSelector } from "reselect";
+import { Dispatch, RootState, select } from "@store";
 import { db } from "../../core/configs/firebase.config";
 
 function CounterComponent() {
@@ -31,6 +32,11 @@ function LightStatus({}: Props) {
   const status = useSelector((state: RootState) => state.lightStatus.turnedOn);
 
   return <div>LightStatus: {status ? "On" : "Off"}</div>;
+}
+
+function CounterSum() {
+  const counter = useSelector(select.counter.totalCount);
+  return <div>CounterSum: {counter}</div>;
 }
 
 function Home() {
@@ -81,6 +87,7 @@ function Home() {
         Turn Off Light
       </button>
       <CounterComponent />
+      <CounterSum />
       <LightStatus />
       {/* <ul>
         {profiles.map((profile) => (
